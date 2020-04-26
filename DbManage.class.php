@@ -87,7 +87,7 @@ class DbManage {
      * @param int $size
      * @param $string $tablename
      */
-    function backup($tablename = '', $dir, $size) {
+    function backup($tablename = '', $dir='', $size='') {
         $dir = $dir ? $dir : './backup/';
         // 创建目录
         if (! is_dir ( $dir )) {
@@ -99,10 +99,11 @@ class DbManage {
         if (! empty ( $tablename )) {
             if(@mysqli_num_rows(mysqli_query($this->db,"SHOW TABLES LIKE '".$tablename."'")) == 1) {
              } else {
-                $this->_showMsg('表-<b>' . $tablename .'</b>-不存在，请检查！',true);
-                die();
+//                $this->_showMsg('表-<b>' . $tablename .'</b>-不存在，请检查！',true);
+//                die();
+                return false;
             }
-            $this->_showMsg('正在备份表 <span class="imp">' . $tablename.'</span>');
+//            $this->_showMsg('正在备份表 <span class="imp">' . $tablename.'</span>');
             // 插入dump信息
             $sql = $this->_retrieve ();
             // 插入表结构信息
@@ -123,9 +124,9 @@ class DbManage {
                 if (strlen ( $sql ) >= $size * 1024) {
                     $file = $filename . "_v" . $p . ".sql";
                     if ($this->_write_file ( $sql, $file, $dir )) {
-                        $this->_showMsg("表-<b>" . $tablename . "</b>-卷-<b>" . $p . "</b>-数据备份完成,备份文件 [ <span class='imp'>" .$dir . $file ."</span> ]");
+//                        $this->_showMsg("表-<b>" . $tablename . "</b>-卷-<b>" . $p . "</b>-数据备份完成,备份文件 [ <span class='imp'>" .$dir . $file ."</span> ]");
                     } else {
-                        $this->_showMsg("备份表 -<b>" . $tablename . "</b>- 失败",true);
+//                        $this->_showMsg("备份表 -<b>" . $tablename . "</b>- 失败",true);
                         return false;
                     }
                     // 下一个分卷
@@ -140,21 +141,23 @@ class DbManage {
             if ($sql != "") {
                 $filename .= "_v" . $p . ".sql";
                 if ($this->_write_file ( $sql, $filename, $dir )) {
-                    $this->_showMsg( "表-<b>" . $tablename . "</b>-卷-<b>" . $p . "</b>-数据备份完成,备份文件 [ <span class='imp'>" .$dir . $filename ."</span> ]");
+//                    $this->_showMsg( "表-<b>" . $tablename . "</b>-卷-<b>" . $p . "</b>-数据备份完成,备份文件 [ <span class='imp'>" .$dir . $filename ."</span> ]");
                 } else {
-                    $this->_showMsg("备份卷-<b>" . $p . "</b>-失败<br />");
+//                    $this->_showMsg("备份卷-<b>" . $p . "</b>-失败<br />");
                     return false;
                 }
             }
-            $this->_showMsg("恭喜您! <span class='imp'>备份成功</span>");
+//            $this->_showMsg("恭喜您! <span class='imp'>备份成功</span>");
+            return true;
         } else {
-            $this->_showMsg('正在备份');
+//            $this->_showMsg('正在备份');
             // 备份全部表
             if ($tables = mysqli_query ( $this->db,"show table status from " . $this->database )) {
-                $this->_showMsg("读取数据库结构成功！");
+//                $this->_showMsg("读取数据库结构成功！");
             } else {
-                $this->_showMsg("读取数据库结构失败！");
-                exit ( 0 );
+//                $this->_showMsg("读取数据库结构失败！");
+//                exit ( 0 );
+                return false;
             }
             // 插入dump信息
             $sql .= $this->_retrieve ();
@@ -183,9 +186,9 @@ class DbManage {
                         $file = $filename . "_v" . $p . ".sql";
                         // 写入文件
                         if ($this->_write_file ( $sql, $file, $dir )) {
-                            $this->_showMsg("-卷-<b>" . $p . "</b>-数据备份完成,备份文件 [ <span class='imp'>".$dir.$file."</span> ]");
+//                            $this->_showMsg("-卷-<b>" . $p . "</b>-数据备份完成,备份文件 [ <span class='imp'>".$dir.$file."</span> ]");
                         } else {
-                            $this->_showMsg("卷-<b>" . $p . "</b>-备份失败!",true);
+//                            $this->_showMsg("卷-<b>" . $p . "</b>-备份失败!",true);
                             return false;
                         }
                         // 下一个分卷
@@ -199,22 +202,23 @@ class DbManage {
             if ($sql != "") {
                 $filename .= "_v" . $p . ".sql";
                 if ($this->_write_file ( $sql, $filename, $dir )) {
-                    $this->_showMsg("-卷-<b>" . $p . "</b>-数据备份完成,备份文件 [ <span class='imp'>".$dir.$filename."</span> ]");
+//                    $this->_showMsg("-卷-<b>" . $p . "</b>-数据备份完成,备份文件 [ <span class='imp'>".$dir.$filename."</span> ]");
                 } else {
-                    $this->_showMsg("卷-<b>" . $p . "</b>-备份失败",true);
+//                    $this->_showMsg("卷-<b>" . $p . "</b>-备份失败",true);
                     return false;
                 }
             }
-            $this->_showMsg("恭喜您! <span class='imp'>备份成功</span>");
+//            $this->_showMsg("恭喜您! <span class='imp'>备份成功</span>");
+            return true;
         }
     }
 
     //  及时输出信息
-    private function _showMsg($msg,$err=false){
-        $err = $err ? "<span class='err'>ERROR:</span>" : '' ;
-        echo "<p class='dbDebug'>".$err . $msg."</p>";
-        flush();
-    }
+//    private function _showMsg($msg,$err=false){
+//        $err = $err ? "<span class='err'>ERROR:</span>" : '' ;
+//        echo "<p class='dbDebug'>".$err . $msg."</p>";
+//        flush();
+//    }
 
     /**
      * 插入数据库备份基础信息
@@ -336,8 +340,9 @@ class DbManage {
     function restore($sqlfile) {
         // 检测文件是否存在
         if (! file_exists ( $sqlfile )) {
-            $this->_showMsg("sql文件不存在！请检查",true);
-            exit ();
+//            $this->_showMsg("sql文件不存在！请检查",true);
+//            exit ();
+            return false;
         }
         $this->lock ( $this->database );
         // 获取数据库存储位置
@@ -346,16 +351,18 @@ class DbManage {
         // 检测是否包含分卷，将类似20120516211738_all_v1.sql从_v分开,有则说明有分卷
         $volume = explode ( "_v", $sqlfile );
         $volume_path = $volume [0];
-        $this->_showMsg("请勿刷新及关闭浏览器以防止程序被中止，如有不慎！将导致数据库结构受损");
-        $this->_showMsg("正在导入备份数据，请稍等！");
+//        $this->_showMsg("请勿刷新及关闭浏览器以防止程序被中止，如有不慎！将导致数据库结构受损");
+//        $this->_showMsg("正在导入备份数据，请稍等！");
         if (empty ( $volume [1] )) {
-            $this->_showMsg ( "正在导入sql：<span class='imp'>" . $sqlfile . '</span>');
+//            $this->_showMsg ( "正在导入sql：<span class='imp'>" . $sqlfile . '</span>');
             // 没有分卷
             if ($this->_import ( $sqlfile )) {
-                $this->_showMsg( "数据库导入成功！");
+//                $this->_showMsg( "数据库导入成功！");
+                return true;
             } else {
-                 $this->_showMsg('数据库导入失败！',true);
-                exit ();
+//                 $this->_showMsg('数据库导入失败！',true);
+//                exit ();
+                return false;
             }
         } else {
             // 存在分卷，则获取当前是第几分卷，循环执行余下分卷
@@ -368,27 +375,30 @@ class DbManage {
                 // 存在其他分卷，继续执行
                 if (file_exists ( $tmpfile )) {
                     // 执行导入方法
-                    $this->_showMsg("正在导入分卷 $volume_id ：<span style='color:#f00;'>" . $tmpfile . '</span><br />');
+//                    $this->_showMsg("正在导入分卷 $volume_id ：<span style='color:#f00;'>" . $tmpfile . '</span><br />');
                     if ($this->_import ( $tmpfile )) {
-
                     } else {
-                        $volume_id = $volume_id ? $volume_id :1;
-                        exit ( "导入分卷：<span style='color:#f00;'>" . $tmpfile . '</span>失败！可能是数据库结构已损坏！请尝试从分卷1开始导入' );
+//                        $volume_id = $volume_id ? $volume_id :1;
+//                        exit ( "导入分卷：<span style='color:#f00;'>" . $tmpfile . '</span>失败！可能是数据库结构已损坏！请尝试从分卷1开始导入' );
+                        return false;
                     }
                 } else {
-                    $this->_showMsg("此分卷备份全部导入成功！<br />");
-                    return;
+//                    $this->_showMsg("此分卷备份全部导入成功！<br />");
+//                    return;
+                    return true;
                 }
                 $volume_id ++;
             }
         }if (empty ( $volume [1] )) {
-            $this->_showMsg ( "正在导入sql：<span class='imp'>" . $sqlfile . '</span>');
+//            $this->_showMsg ( "正在导入sql：<span class='imp'>" . $sqlfile . '</span>');
             // 没有分卷
             if ($this->_import ( $sqlfile )) {
-                $this->_showMsg( "数据库导入成功！");
+//                $this->_showMsg( "数据库导入成功！");
+                return true;
             } else {
-                 $this->_showMsg('数据库导入失败！',true);
-                exit ();
+//                 $this->_showMsg('数据库导入失败！',true);
+//                exit ();
+                return false;
             }
         } else {
             // 存在分卷，则获取当前是第几分卷，循环执行余下分卷
@@ -400,16 +410,18 @@ class DbManage {
                 // 存在其他分卷，继续执行
                 if (file_exists ( $tmpfile )) {
                     // 执行导入方法
-                    $this->_showMsg("正在导入分卷 $volume_id ：<span style='color:#f00;'>" . $tmpfile . '</span><br />');
+//                    $this->_showMsg("正在导入分卷 $volume_id ：<span style='color:#f00;'>" . $tmpfile . '</span><br />');
                     if ($this->_import ( $tmpfile )) {
 
                     } else {
                         $volume_id = $volume_id ? $volume_id :1;
-                        exit ( "导入分卷：<span style='color:#f00;'>" . $tmpfile . '</span>失败！可能是数据库结构已损坏！请尝试从分卷1开始导入' );
+//                        exit ( "导入分卷：<span style='color:#f00;'>" . $tmpfile . '</span>失败！可能是数据库结构已损坏！请尝试从分卷1开始导入' );
+                        return false;
                     }
                 } else {
-                    $this->_showMsg("此分卷备份全部导入成功！<br />");
-                    return;
+//                    $this->_showMsg("此分卷备份全部导入成功！<br />");
+//                    return;
+                    return true;
                 }
                 $volume_id ++;
             }
