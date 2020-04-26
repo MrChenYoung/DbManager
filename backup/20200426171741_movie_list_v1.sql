@@ -4,7 +4,7 @@
 -- http://yanue.net 
 --
 -- 主机: localhost
--- 生成日期: 2020 年  04 月 26 日 16:25
+-- 生成日期: 2020 年  04 月 26 日 17:17
 -- MySQL版本: 5.5.5-10.4.8-MariaDB
 -- PHP 版本: 7.3.10
 
@@ -31,7 +31,7 @@ CREATE TABLE `movie_list` (
   `isMp4` tinyint(4) DEFAULT 0 COMMENT '是否是mp4',
   `tags` varchar(32) DEFAULT '' COMMENT '标签',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8 COMMENT='视频列表';
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 COMMENT='视频列表';
 
 --
 -- 转存表中的数据 movie_list
@@ -88,110 +88,4 @@ INSERT INTO `movie_list` VALUES('73','5ea420d37eb35.jpg','【日韓】大胸美�
 INSERT INTO `movie_list` VALUES('74','5ea421da5814b.jpg','【女同】 两个丰满姐妹没有男人戴上假J8玩的也是不亦乐乎','5ea421da58148','255.96 MB','00:49:20','0','0','0','');
 INSERT INTO `movie_list` VALUES('75','5ea423671ba8a.jpg','【自卫】极品美女自卫渴望肉棍艹翻他的骚B','5ea423671ba87','30.84 MB','00:10:59','0','0','0','');
 INSERT INTO `movie_list` VALUES('76','5ea53ad0011b4.jpg','浙江豪放留學生，激戰巧克力吉拿棒！穴穴坐著一根，嘴裡也含著一根！','5ea53ad0011b0','121 MB','00:14:26','0','0','0','');
---
--- 表的结构movie_resource_path
---
-
-DROP TABLE IF EXISTS `movie_resource_path`;
-CREATE TABLE `movie_resource_path` (
-  `id` tinyint(4) NOT NULL COMMENT '编号',
-  `type_name` varchar(64) DEFAULT NULL COMMENT '存放的路径类型',
-  `path` varchar(200) DEFAULT NULL COMMENT '路径',
-  `position` varchar(32) DEFAULT NULL COMMENT '视频存储位置',
-  `current_use` tinyint(4) DEFAULT 0 COMMENT '是否正在使用',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='视频资源存储路径表';
-
---
--- 转存表中的数据 movie_resource_path
---
-
-INSERT INTO `movie_resource_path` VALUES('1','thumbnail','/Users/mrchen/Desktop/www/PhpProjects/movieThumbs','local','1');
-INSERT INTO `movie_resource_path` VALUES('2','movie','/Users/mrchen/Desktop/www/PhpProjects/movies','local','1');
-INSERT INTO `movie_resource_path` VALUES('3','thumbnail','/Users/mrchen/Desktop/www/PhpProjects/OneDriver/OneDrive - xKx/movieThumbs','cloudOnline','0');
-INSERT INTO `movie_resource_path` VALUES('4','movie','/Users/mrchen/Desktop/www/PhpProjects/OneDriver/OneDrive - xKx/movies','cloudOnline','0');
-INSERT INTO `movie_resource_path` VALUES('5','thumbnail','D:/MovieProject/thumbnails','local','0');
-INSERT INTO `movie_resource_path` VALUES('6','movie','D:/MovieProject/movies','local','0');
-INSERT INTO `movie_resource_path` VALUES('7','thumbnail','D:/MovieProject/OneDriver/OneDrive - xKx/movieThumbs','cloudOnline','0');
-INSERT INTO `movie_resource_path` VALUES('8','movie','D:/MovieProject/OneDriver/OneDrive - xKx/movies','cloudOnline','0');
-INSERT INTO `movie_resource_path` VALUES('9','thumbnail','I:/PHPProject/movieThumbs','local','0');
-INSERT INTO `movie_resource_path` VALUES('10','movie','I:/PHPProject/movies','local','0');
-INSERT INTO `movie_resource_path` VALUES('11','FFmpeg','/usr/local/bin/ffmpeg','','1');
-INSERT INTO `movie_resource_path` VALUES('12','FFmpeg','C:/Users/yi_ao/Desktop/ffmpeg-20191028-68f623d-win64-static/bin/ffmpeg','','0');
-INSERT INTO `movie_resource_path` VALUES('13','FFmpeg','G:/FFmpeg/bin/ffmpeg','','0');
-INSERT INTO `movie_resource_path` VALUES('14','movie','/Users/mrchen/Desktop/www/PhpProjects/MyMovieOneDriver/OneDrive - xKx/MyMovieData/movies','cloudOnline','1');
-INSERT INTO `movie_resource_path` VALUES('15','thumbnail','/Users/mrchen/Desktop/www/PhpProjects/MyMovieOneDriver/OneDrive - xKx/MyMovieData/movieThumbs','cloudOnline','1');
---
--- 表的结构movie_tags
---
-
-DROP TABLE IF EXISTS `movie_tags`;
-CREATE TABLE `movie_tags` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标签编号',
-  `tag_name` varchar(64) DEFAULT NULL COMMENT '标签名称',
-  `movie_count` int(11) DEFAULT 0 COMMENT '视频总量',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='视频标签表';
-
---
--- 转存表中的数据 movie_tags
---
-
-INSERT INTO `movie_tags` VALUES('1','国产','-1');
-INSERT INTO `movie_tags` VALUES('2','欧美','0');
-INSERT INTO `movie_tags` VALUES('3','日韩','0');
-INSERT INTO `movie_tags` VALUES('4','制服丝袜','-1');
-INSERT INTO `movie_tags` VALUES('5','情趣内衣','0');
-INSERT INTO `movie_tags` VALUES('6','潮吹','0');
-INSERT INTO `movie_tags` VALUES('7','肛交','0');
-INSERT INTO `movie_tags` VALUES('8','重口','0');
-INSERT INTO `movie_tags` VALUES('9','动漫','0');
-INSERT INTO `movie_tags` VALUES('10','偷拍自拍','0');
-INSERT INTO `movie_tags` VALUES('11','人兽','0');
---
--- 表的结构movie_to_download
---
-
-DROP TABLE IF EXISTS `movie_to_download`;
-CREATE TABLE `movie_to_download` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编号',
-  `cover` varchar(300) DEFAULT NULL COMMENT '视频封面图',
-  `movie_title` varchar(300) DEFAULT NULL COMMENT '视频标题',
-  `movie_m3u8_url` varchar(200) DEFAULT NULL COMMENT '视频播放地址',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8 COMMENT='待下载视频列表';
-
---
--- 转存表中的数据 movie_to_download
---
-
-INSERT INTO `movie_to_download` VALUES('89','https://img.hghs.cn:2020/avid5e211c2e59004.jpg',' 絕倫正姊的連擊中出騎乘位幹砲 明里紬','https://cn2.fp73.com/avid5e211c2e59004/index.m3u8');
-INSERT INTO `movie_to_download` VALUES('90','https://img.hghs.cn:2020/3279.jpg','地方妹妹脱衣裸聊~就是要陪你聊骚','https://cn3.fp75.com/avid5dd615138645d/index.m3u8');
-INSERT INTO `movie_to_download` VALUES('91','https://img.hghs.cn:2020/3268.jpg','用自己的纤纤玉手来玩小穴穴','https://cn3.fp75.com/avid5dca1c065cb5c/index.m3u8');
-INSERT INTO `movie_to_download` VALUES('92','https://img.hghs.cn:2020/avid5e5f20beafead.jpg','Tiny4K Jessie Saint Big Dick For Valentines','https://cn4.fp29.com/avid5e5f20beafead/index.m3u8');
-INSERT INTO `movie_to_download` VALUES('93','https://img.hghs.cn:2020/avid5de9d94cc80dc.jpg','EroticaX Natalia Queen Naughty Nurse Natalia','https://cn4.fp29.com/avid5de9d94cc80dc/index.m3u8');
---
--- 表的结构movie_tools
---
-
-DROP TABLE IF EXISTS `movie_tools`;
-CREATE TABLE `movie_tools` (
-  `id` tinyint(4) NOT NULL AUTO_INCREMENT COMMENT '编号',
-  `action` tinyint(4) DEFAULT 0 COMMENT '操作',
-  `flag` varchar(32) DEFAULT NULL COMMENT '功能标识',
-  `func` varchar(200) DEFAULT NULL COMMENT '功能说明',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='视频工具表';
-
---
--- 转存表中的数据 movie_tools
---
-
-INSERT INTO `movie_tools` VALUES('0','1','downloadingMovie','正在下载视频标识');
-INSERT INTO `movie_tools` VALUES('2','1','stopDownload','停止下载视频标识');
-INSERT INTO `movie_tools` VALUES('3','0','autoUpdatingMovie','正在自动更新视频标识');
-INSERT INTO `movie_tools` VALUES('4','1','stopAutoUpdateMovie','停止自动更新视频标识');
-INSERT INTO `movie_tools` VALUES('5','0','encryptingMovie','正在加密处理视频标识');
-INSERT INTO `movie_tools` VALUES('6','1','stopEncryptMovie','停止加密处理视频标识');
-INSERT INTO `movie_tools` VALUES('7','0','translatingMp4Movie','正在转换MP4视频标识');
-INSERT INTO `movie_tools` VALUES('8','1','stopTranslatingMp4Movie','停止转换MP4视频标识');
+INSERT INTO `movie_list` VALUES('77','5ea55b685c9f1.jpg','EroticaX Natalia Queen Naughty Nurse Natalia','5ea55b685c9ed','224.96 MB','00:26:34','0','0','0','');

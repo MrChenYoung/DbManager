@@ -54,7 +54,7 @@ require 'DbManage.class.php';
 $db = new DBManage ();
 // 参数：备份哪个表(可选),备份目录(可选，默认为backup),分卷大小(可选,默认2048，即2M)
 //$db->backup ('','','');
-$db->restore ( './backup/20200426162551_all_v1.sql');
+$db->restore ( './backup/20200426171741_movie_list_v1.sql');
 ?>
 
 </body>
