@@ -30,6 +30,7 @@ class DbManage {
     var $db; // 数据库连接
     var $database; // 所用数据库
     var $sqldir; // 数据库备份文件夹
+
     // 换行符
     private $ds = "\n";
     // 存储SQL的变量
@@ -213,7 +214,6 @@ class DbManage {
         $err = $err ? "<span class='err'>ERROR:</span>" : '' ;
         echo "<p class='dbDebug'>".$err . $msg."</p>";
         flush();
-
     }
 
     /**
@@ -362,12 +362,13 @@ class DbManage {
             $volume_id = explode ( ".sq", $volume [1] );
             // 当前分卷为$volume_id
             $volume_id = intval ( $volume_id [0] );
+
             while ( $volume_id ) {
                 $tmpfile = $volume_path . "_v" . $volume_id . ".sql";
                 // 存在其他分卷，继续执行
                 if (file_exists ( $tmpfile )) {
                     // 执行导入方法
-                    $this->msg .= "正在导入分卷 $volume_id ：<span style='color:#f00;'>" . $tmpfile . '</span><br />';
+                    $this->_showMsg("正在导入分卷 $volume_id ：<span style='color:#f00;'>" . $tmpfile . '</span><br />');
                     if ($this->_import ( $tmpfile )) {
 
                     } else {
@@ -375,7 +376,7 @@ class DbManage {
                         exit ( "导入分卷：<span style='color:#f00;'>" . $tmpfile . '</span>失败！可能是数据库结构已损坏！请尝试从分卷1开始导入' );
                     }
                 } else {
-                    $this->msg .= "此分卷备份全部导入成功！<br />";
+                    $this->_showMsg("此分卷备份全部导入成功！<br />");
                     return;
                 }
                 $volume_id ++;
@@ -399,7 +400,7 @@ class DbManage {
                 // 存在其他分卷，继续执行
                 if (file_exists ( $tmpfile )) {
                     // 执行导入方法
-                    $this->msg .= "正在导入分卷 $volume_id ：<span style='color:#f00;'>" . $tmpfile . '</span><br />';
+                    $this->_showMsg("正在导入分卷 $volume_id ：<span style='color:#f00;'>" . $tmpfile . '</span><br />');
                     if ($this->_import ( $tmpfile )) {
 
                     } else {
@@ -407,7 +408,7 @@ class DbManage {
                         exit ( "导入分卷：<span style='color:#f00;'>" . $tmpfile . '</span>失败！可能是数据库结构已损坏！请尝试从分卷1开始导入' );
                     }
                 } else {
-                    $this->msg .= "此分卷备份全部导入成功！<br />";
+                    $this->_showMsg("此分卷备份全部导入成功！<br />");
                     return;
                 }
                 $volume_id ++;
@@ -455,7 +456,7 @@ class DbManage {
     //插入单条sql语句
     private function _insert_into($sql){
         if (! mysqli_query ( $this->db,trim ( $sql ) )) {
-            $this->msg .= mysql_error ();
+            $this->_showMsg(mysqli_error ($this->db));
             return false;
         }
     }
